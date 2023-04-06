@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
-const Teacher = require('../models/teachers');
+const User = require('../models/users');
 const bcrypt = require('bcryptjs');
 
 const Login = async (req, res) => {
     try {
         const { username, password } = req.body;
 
-        const foundUser = await Teacher.findOne({ username });
+        const foundUser = await User.findOne({ username });
 
         if (foundUser && (await bcrypt.compare(password, foundUser.password))) {
             const token = jwt.sign(

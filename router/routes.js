@@ -6,6 +6,7 @@ const sectionsController = require('../controllers/sectionsController');
 const aboutController = require('../controllers/aboutController');
 const bannersController = require('../controllers/bannersController');
 const usersController = require('../controllers/usersController');
+const authController = require('../controllers/authController');
 
 // -------------------------------------------- Section Routes --------------------------------------------- //
 router.get('/section', sectionsController.getSections);
