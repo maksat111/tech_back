@@ -21,9 +21,9 @@ const createBanner = async (req, res) => {
     try {
         const { url, active } = req.body;
 
-        const img_direction = `./uploads/` + new Date().toISOString() + `${req.files.image.name}`;
+        let randomNumber_tm = Math.floor(Math.random() * 999999999999);
+        let img_direction = `./uploads/` + randomNumber_tm + `${req.files.image.name}`;
         fs.writeFile(img_direction, req.files.image.data, function (err) { console.log(err) });
-
 
         const newBanner = await Banner.create({
             url,
@@ -47,15 +47,31 @@ const createBanner = async (req, res) => {
 const updateBanner = async (req, res) => {
     try {
         const { id } = req.params;
-        const { content_tm, content_ru } = req.body;
+        const { url, active } = req.body;
+
+        const found = await Banner.findOne({ _id: id });
+
+        if (!found) {
+            return res.status(404).json({
+                success: 0,
+                msg: "No banner on this id!"
+            });
+        }
+
+        await fs.unlinkSync(found.image);
+        let randomNumber_tm = Math.floor(Math.random() * 999999999999);
+        let img_direction = `./uploads/` + randomNumber_tm + `${req.files.image.name}`;
+        fs.writeFile(img_direction, req.files.image.data, function (err) { console.log(err) });
 
         const updatedBanner = await Banner.findByIdAndUpdate(id, {
-            content_tm,
-            content_ru
+            url,
+            active,
+            image: img_direction
         });
 
-        updatedBanner.content_ru = content_ru;
-        updatedBanner.content_tm = content_tm;
+        updatedBanner.url = url;
+        updatedBanner.active = active;
+        updatedBanner.image = img_direction;
 
         res.status(200).json({
             success: 1,

@@ -18,7 +18,7 @@ router.delete('/admin/section/delete/:id', sectionsController.deleteSection);
 //---------------------------------------------- Banners Routes ---------------------------------------------------- //
 router.get('/banner', bannersController.getBanner);
 router.post('/admin/banner/create', bannersController.createBanner);
-// router.patch('/admin/banner/update/:id', bannersController.updateBanner);
+router.patch('/admin/banner/update/:id', bannersController.updateBanner);
 // router.delete('/admin/banner/delete/:id', bannersController.deleteBanner);
 
 //---------------------------------------------- About Routes --------------------------------------------------- //
