@@ -18,7 +18,7 @@ const getAboutContent = async (req, res) => {
 
 const createAboutContent = async (req, res) => {
     try {
-        const { content_tm, content_ru } = req.body;
+        const { content_tm, content_ru, active } = req.body;
 
         const found = await About.findOne({ content_tm, content_ru });
 
@@ -31,7 +31,8 @@ const createAboutContent = async (req, res) => {
 
         const newAbout = await About.create({
             content_tm,
-            content_ru
+            content_ru,
+            active
         });
 
         res.status(201).json({
@@ -50,11 +51,12 @@ const createAboutContent = async (req, res) => {
 const updateAboutContent = async (req, res) => {
     try {
         const { id } = req.params;
-        const { content_tm, content_ru } = req.body;
+        const { content_tm, content_ru, active } = req.body;
 
         const updatedAbout = await About.findByIdAndUpdate(id, {
             content_tm,
-            content_ru
+            content_ru,
+            active
         });
 
         updatedAbout.content_ru = content_ru;

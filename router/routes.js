@@ -3,6 +3,7 @@ const router = express.Router();
 
 // ------------------------------------------- Controllers --------------------------------------------- //
 const sectionsController = require('../controllers/sectionsController');
+const aboutController = require('../controllers/aboutController');
 
 // -------------------------------------------- Section Routes --------------------------------------------- //
 router.get('/section', sectionsController.getSections);
@@ -16,6 +17,10 @@ router.delete('/admin/section/delete/:id', sectionsController.deleteSection);
 //---------------------------------------------- Banners Routes ---------------------------------------------------- //
 
 //---------------------------------------------- About Routes --------------------------------------------------- //
+router.get('/about', aboutController.getAboutContent);
+router.post('/admin/about/create', aboutController.createAboutContent);
+router.patch('/admin/about/update/:id', aboutController.updateAboutContent);
+router.delete('/admin/about/delete/:id', aboutController.deleteAboutContent);
 
 
 module.exports = router;
