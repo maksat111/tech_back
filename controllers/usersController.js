@@ -1,95 +1,97 @@
-const Users = require('../models/users');
+const User = require('../models/users');
+const bcrypt = require('bcryptjs');
 
-const getUsers = async (req, res) => {
+const createUser = async (req, res) => {
     try {
-        const content = await About.find();
-        res.status(200).json({
-            success: 1,
-            data: content
-        })
-    } catch (err) {
-        res.status(500).json({
-            success: 0,
-            msg: err.message
-        })
-    }
-}
+        const { name, surname, username, password } = req.body;
+        const foundUser = await User.findOne({ username });
 
-
-const createUsers = async (req, res) => {
-    try {
-        const { content_tm, content_ru, active } = req.body;
-
-        const found = await About.findOne({ content_tm, content_ru });
-
-        if (found) {
-            return res.status(200).json({
-                success: 0,
-                msg: "This content is already exists!"
-            });
+        if (foundUser) {
+            return res.status(403).json({ success: 0, message: 'This username is not aviable!' });
         }
 
-        const newAbout = await About.create({
-            content_tm,
-            content_ru,
-            active
+        const encryptedPassword = await bcrypt.hash(password, 10);
+
+        const User = await User.create({
+            name,
+            surname,
+            username,
+            password: encryptedPassword,
         });
 
-        res.status(201).json({
-            success: 1,
-            data: newAbout
-        })
+        res.status(201).json({ success: 1, data: User });
     } catch (err) {
         res.status(500).json({
             success: 0,
-            msg: err.message
-        })
+            message: err.message
+        });
     }
 }
 
 
-const updateUsers = async (req, res) => {
+const getAllUsers = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { content_tm, content_ru, active } = req.body;
-
-        const updatedAbout = await About.findByIdAndUpdate(id, {
-            content_tm,
-            content_ru,
-            active
-        });
-
-        updatedAbout.content_ru = content_ru;
-        updatedAbout.content_tm = content_tm;
+        const Users = await User.find();
 
         res.status(200).json({
             success: 1,
-            data: updatedAbout
-        })
+            data: Users
+        });
     } catch (err) {
         res.status(500).json({
             success: 0,
-            msg: err.message
-        })
+            message: err.message
+        });
     }
 }
 
 
-const deleteUsers = async (req, res) => {
+const deleteUser = async (req, res) => {
     try {
-        const { id } = req.params;
-        const found = await About.findOne({ _id: id });
+        const { User_id } = req.params;
+        const foundUser = await User.findOne({ _id: User_id });
 
-        if (!found) {
-            return res.status(200).json({ success: 0, msg: 'No About in this id!' });
+        if (!foundUser) {
+            return res.status(200).json({ success: 0, msg: 'No User in this id!' });
         }
 
-        const deletedGroup = await About.deleteOne({ _id: id });
+        const deletedUser = await User.deleteOne({ _id: User_id });
 
         res.status(200).json({
             success: 1,
-            data: found
+            data: foundUser
         });
+    } catch (err) {
+        res.status(500).json({
+            success: 0,
+            msg: err.message
+        });
+    }
+}
+
+const updateUser = async (req, res) => {
+    try {
+        const { User_id } = req.params;
+        const { name, surname, username, password } = req.body;
+
+        const encryptedPassword = await bcrypt.hash(password, 10);
+
+        let updatedUser = await User.findByIdAndUpdate(User_id, {
+            name,
+            surname,
+            username,
+            password: encryptedPassword
+        });
+
+        updatedUser.name = name;
+        updatedUser.surname = surname;
+        updatedUser.username = username;
+        updatedUser.password = encryptedPassword;
+
+        res.status(200).json({
+            success: 1,
+            data: updatedUser
+        })
     } catch (err) {
         res.status(500).json({
             success: 0,
@@ -98,7 +100,7 @@ const deleteUsers = async (req, res) => {
     }
 }
 
-exports.getUsers = getUsers;
-exports.createUsers = createUsers;
-exports.updateUsers = updateUsers;
-exports.deleteUsers = deleteUsers;
+exports.createUser = createUser;
+exports.getAllUsers = getAllUsers;
+exports.deleteUser = deleteUser;
+exports.updateUser = updateUser;
