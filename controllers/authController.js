@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/users');
 const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
 const Login = async (req, res) => {
     try {
@@ -16,8 +17,10 @@ const Login = async (req, res) => {
                     expiresIn: "15h",
                 }
             );
-            foundUser.token = token;
-            return res.status(200).json({ success: 1, data: foundUser });
+
+            foundUser.password = undefined;
+
+            return res.status(200).json({ success: 1, data: { ...foundUser._doc, token } });
         }
 
         res.status(200).json({ success: 0, msg: 'Invalid username or password!' });

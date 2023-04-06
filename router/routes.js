@@ -35,4 +35,7 @@ router.post('/admin/user/create', usersController.createUser);
 router.patch('/admin/user/update/:id', usersController.updateUser);
 router.delete('/admin/user/delete/:id', usersController.deleteUser);
 
+//---------------------------------------------- Auth Routes --------------------------------------------------- //
+router.post('/admin/login', authController.Login);
+
 module.exports = router;
