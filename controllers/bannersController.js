@@ -95,7 +95,9 @@ const deleteBanner = async (req, res) => {
             return res.status(200).json({ success: 0, msg: 'No Banner in this id!' });
         }
 
-        const deletedGroup = await Banner.deleteOne({ _id: id });
+        const deletedBanner = await Banner.deleteOne({ _id: id });
+
+        await fs.unlinkSync(found.image);
 
         res.status(200).json({
             success: 1,
