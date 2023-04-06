@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 // ------------------------------------------- Controllers --------------------------------------------- //
-const sectionController = require('../controllers/sectionController');
+const sectionsController = require('../controllers/sectionsController');
 
 // -------------------------------------------- Section Routes --------------------------------------------- //
-router.post('/section', sectionController.getSections);
+router.post('/admin/section/create', sectionsController.create);
+router.get('/section', sectionsController.getSections);
 
 
 //---------------------------------------------- News Routes -------------------------------------------------- //
@@ -13,10 +14,6 @@ router.post('/section', sectionController.getSections);
 //---------------------------------------------- Banners Routes ---------------------------------------------------- //
 
 //---------------------------------------------- About Routes --------------------------------------------------- //
-router.get('/students/:group_id', auth, studentController.getStudentsByGroupId);
-router.post('/students/create', auth, studentController.createStudent);
-router.delete('/students/delete/:student_id', auth, studentController.deleteStudent);
-router.patch('/students/update/:student_id', auth, studentController.updateStudent);
 
 
 module.exports = router;
