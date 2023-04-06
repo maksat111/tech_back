@@ -12,14 +12,14 @@ const createUser = async (req, res) => {
 
         const encryptedPassword = await bcrypt.hash(password, 10);
 
-        const User = await User.create({
+        const createdUser = await User.create({
             name,
             surname,
             username,
             password: encryptedPassword,
         });
 
-        res.status(201).json({ success: 1, data: User });
+        res.status(201).json({ success: 1, data: createdUser });
     } catch (err) {
         res.status(500).json({
             success: 0,
@@ -74,7 +74,7 @@ const updateUser = async (req, res) => {
         const { id } = req.params;
         const { name, surname, username } = req.body;
 
-        let updatedUser = await User.findByIdAndUpdate(User_id, {
+        let updatedUser = await User.findByIdAndUpdate(id, {
             name,
             surname,
             username,
