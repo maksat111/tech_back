@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const date = require('date-and-time');
 
-const BannersSchema = new mongoose.Schema({
+const AboutSchema = new mongoose.Schema({
     content_tm: {
         type: String,
         default: ''
@@ -20,4 +20,4 @@ const BannersSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model("Banners", BannersSchema);
+module.exports = mongoose.model("About", AboutSchema);
