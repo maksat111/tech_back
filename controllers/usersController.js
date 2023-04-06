@@ -29,7 +29,7 @@ const createUser = async (req, res) => {
 }
 
 
-const getAllUsers = async (req, res) => {
+const getUser = async (req, res) => {
     try {
         const Users = await User.find();
 
@@ -48,14 +48,14 @@ const getAllUsers = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     try {
-        const { User_id } = req.params;
-        const foundUser = await User.findOne({ _id: User_id });
+        const { id } = req.params;
+        const foundUser = await User.findOne({ _id: id });
 
         if (!foundUser) {
             return res.status(200).json({ success: 0, msg: 'No User in this id!' });
         }
 
-        const deletedUser = await User.deleteOne({ _id: User_id });
+        const deletedUser = await User.deleteOne({ _id: id });
 
         res.status(200).json({
             success: 1,
@@ -71,22 +71,18 @@ const deleteUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     try {
-        const { User_id } = req.params;
-        const { name, surname, username, password } = req.body;
-
-        const encryptedPassword = await bcrypt.hash(password, 10);
+        const { id } = req.params;
+        const { name, surname, username } = req.body;
 
         let updatedUser = await User.findByIdAndUpdate(User_id, {
             name,
             surname,
             username,
-            password: encryptedPassword
         });
 
         updatedUser.name = name;
         updatedUser.surname = surname;
         updatedUser.username = username;
-        updatedUser.password = encryptedPassword;
 
         res.status(200).json({
             success: 1,
@@ -101,6 +97,6 @@ const updateUser = async (req, res) => {
 }
 
 exports.createUser = createUser;
-exports.getAllUsers = getAllUsers;
+exports.getUser = getUser;
 exports.deleteUser = deleteUser;
 exports.updateUser = updateUser;

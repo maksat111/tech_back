@@ -5,6 +5,7 @@ const router = express.Router();
 const sectionsController = require('../controllers/sectionsController');
 const aboutController = require('../controllers/aboutController');
 const bannersController = require('../controllers/bannersController');
+const usersController = require('../controllers/usersController');
 
 // -------------------------------------------- Section Routes --------------------------------------------- //
 router.get('/section', sectionsController.getSections);
@@ -27,5 +28,10 @@ router.post('/admin/about/create', aboutController.createAboutContent);
 router.patch('/admin/about/update/:id', aboutController.updateAboutContent);
 router.delete('/admin/about/delete/:id', aboutController.deleteAboutContent);
 
+//---------------------------------------------- User Routes --------------------------------------------------- //
+router.get('/admin/user', usersController.getUser);
+router.post('/admin/user/create', usersController.createUser);
+router.patch('/admin/user/update/:id', usersController.updateUser);
+router.delete('/admin/user/delete/:id', usersController.deleteUser);
 
 module.exports = router;
