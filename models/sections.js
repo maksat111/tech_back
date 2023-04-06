@@ -1,27 +1,19 @@
 const mongoose = require('mongoose');
 const date = require('date-and-time');
 
-const BreakingRulesSchema = new mongoose.Schema({
-    student_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Students'
-    },
-    uniform: {
-        type: Boolean,
-        default: false
-    },
-    late: {
-        type: Boolean,
-        default: false
-    },
-    note: {
+const SectionsSchema = new mongoose.Schema({
+    name_tm: {
         type: String,
-        default: null
+        default: 'No name'
+    },
+    name_ru: {
+        type: String,
+        default: 'No name'
     },
     created_at: {
         type: String,
-        default: date.format(new Date(), 'YYYY-MM-DD'),
+        default: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
     },
 });
 
-module.exports = mongoose.model("BreakingRules", BreakingRulesSchema);
+module.exports = mongoose.model("Sections", SectionsSchema);
