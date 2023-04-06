@@ -1,4 +1,5 @@
-const Banner = require('../models/banner');
+const Banner = require('../models/banners');
+const fs = require('fs');
 
 const getBanner = async (req, res) => {
     try {
@@ -18,20 +19,16 @@ const getBanner = async (req, res) => {
 
 const createBanner = async (req, res) => {
     try {
-        const { content_tm, content_ru } = req.body;
+        const { url, active } = req.body;
 
-        const found = await Banner.findOne({ content_tm, content_ru });
+        const img_direction = `./uploads/` + new Date().toISOString() + `${req.files.image.name}`;
+        fs.writeFile(img_direction, req.files.image.data, function (err) { console.log(err) });
 
-        if (found) {
-            return res.status(200).json({
-                success: 0,
-                msg: "This content is already exists!"
-            });
-        }
 
         const newBanner = await Banner.create({
-            content_tm,
-            content_ru
+            url,
+            active,
+            image: img_direction
         });
 
         res.status(201).json({

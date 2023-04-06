@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const fileupload = require("express-fileupload");
 require('dotenv').config();
 
 // -------------------------------------- App config -------------------------------------//
@@ -9,8 +10,10 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 // ------------------------------------- Middlewares ------------------------------------ //
+app.use(fileupload());
+app.use("/uploads", express.static("/uploads"));
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "10mb" }));
 app.use(cors());
 app.use(morgan('dev'));
 app.use((req, res, next) => {
