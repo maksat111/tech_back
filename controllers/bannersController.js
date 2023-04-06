@@ -21,14 +21,16 @@ const createBanner = async (req, res) => {
     try {
         const { url, active } = req.body;
 
-        let randomNumber_tm = Math.floor(Math.random() * 999999999999);
-        let img_direction = `./uploads/` + randomNumber_tm + `${req.files.image.name}`;
-        fs.writeFile(img_direction, req.files.image.data, function (err) { console.log(err) });
+        if (req.files?.image) {
+            let randomNumber_tm = Math.floor(Math.random() * 999999999999);
+            var img_direction = `./uploads/` + randomNumber_tm + `${req.files.image.name}`;
+            fs.writeFile(img_direction, req.files.image.data, function (err) { console.log(err) });
+        }
 
         const newBanner = await Banner.create({
             url,
             active,
-            image: img_direction
+            image: req.files?.image ? img_direction : ''
         });
 
         res.status(201).json({
@@ -58,20 +60,23 @@ const updateBanner = async (req, res) => {
             });
         }
 
-        await fs.unlinkSync(found.image);
-        let randomNumber_tm = Math.floor(Math.random() * 999999999999);
-        let img_direction = `./uploads/` + randomNumber_tm + `${req.files.image.name}`;
-        fs.writeFile(img_direction, req.files.image.data, function (err) { console.log(err) });
+        if (req.files?.image) {
+            found.image !== "" && await fs.unlinkSync(found.image);
+            const randomNumber_tm = Math.floor(Math.random() * 999999999999);
+            var img_direction = `./uploads/` + randomNumber_tm + `${req.files.image.name}`;
+            fs.writeFile(img_direction, req.files.image.data, function (err) { console.log(err) });
+        }
+
 
         const updatedBanner = await Banner.findByIdAndUpdate(id, {
             url,
             active,
-            image: img_direction
+            image: req.files ? img_direction : found.image
         });
 
         updatedBanner.url = url;
         updatedBanner.active = active;
-        updatedBanner.image = img_direction;
+        updatedBanner.image = req.files ? img_direction : found.image;
 
         res.status(200).json({
             success: 1,
