@@ -48,9 +48,12 @@ const getNews = async (req, res) => {
             .sort({ show_at: 'asc' })
             .exec();
 
+        const count = await News.countDocuments();
+
         res.status(200).json({
             success: 1,
-            data: found
+            count,
+            data: found,
         });
     } catch (err) {
         res.status(500).json({

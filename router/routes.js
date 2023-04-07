@@ -13,14 +13,15 @@ const authController = require('../controllers/authController');
 const newsController = require('../controllers/newsController');
 
 // -------------------------------------------- Section Routes --------------------------------------------- //
-router.get('/section', sectionsController.getSections);
+router.get('/section/list', sectionsController.getSections);
 router.post('/admin/section/create', sectionsController.create);
 router.patch('/admin/section/update/:id', sectionsController.update);
 router.delete('/admin/section/delete/:id', sectionsController.deleteSection);
 
 
 //---------------------------------------------- News Routes -------------------------------------------------- //
-router.get('/news', newsController.getNews);
+router.get('/news/list', newsController.getNews);
+router.get('/news/list/:id', newsController.getNewsBySection);
 router.post('/admin/news/create', newsController.createNews);
 router.patch('/admin/news/update/:id', newsController.updateNews);
 router.delete('/admin/news/delete/:id', newsController.deleteNews);
