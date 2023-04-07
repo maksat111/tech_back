@@ -58,6 +58,10 @@ const getNews = async (req, res) => {
 
         const count = await News.countDocuments();
 
+        found.content_ru = undefined;
+        found.content_tm = undefined;
+        found.created_at = undefined;
+
         res.status(200).json({
             success: 1,
             count,
@@ -143,6 +147,10 @@ const getNewsBySection = async (req, res) => {
             .sort({ show_at: 'asc' })
             .exec();
 
+        found.content_ru = undefined;
+        found.content_tm = undefined;
+        found.created_at = undefined;
+
         res.status(200).json({
             success: 1,
             data: found
@@ -162,7 +170,9 @@ const getNewsDetail = async (req, res) => {
 
         const found = await News.findOne({ _id: id });
 
-        await News.findByIdAndUpdate(id, { view: ++found.view })
+        await News.findByIdAndUpdate(id, { view: ++found.view });
+
+        found.created_at = undefined;
 
         res.status(200).json({
             success: 1,
