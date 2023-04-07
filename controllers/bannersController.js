@@ -20,8 +20,6 @@ const getBanner = async (req, res) => {
 
 const createBanner = async (req, res) => {
     try {
-        const { url, active } = req.body;
-
         if (req.files?.image) {
             img = await imageUpload(req.files.image.name, req.files.image.data);
             req.body.image = img;
@@ -45,7 +43,6 @@ const createBanner = async (req, res) => {
 const updateBanner = async (req, res) => {
     try {
         const { id } = req.params;
-        const { url, active } = req.body;
 
         const found = await Banner.findOne({ _id: id });
 
@@ -61,7 +58,7 @@ const updateBanner = async (req, res) => {
             req.body.image = img;
         }
 
-        const updatedBanner = await Banner.findByIdAndUpdate(id, req.body);
+        await Banner.findByIdAndUpdate(id, req.body);
 
         res.status(200).json({
             success: 1,
@@ -84,13 +81,12 @@ const deleteBanner = async (req, res) => {
             return res.status(200).json({ success: 0, msg: 'No Banner in this id!' });
         }
 
-        const deletedBanner = await Banner.deleteOne({ _id: id });
+        await Banner.deleteOne({ _id: id });
 
         found.image !== '' && await fs.unlinkSync(found.image);
 
         res.status(200).json({
             success: 1,
-            data: found
         });
     } catch (err) {
         res.status(500).json({

@@ -53,18 +53,14 @@ const updateAboutContent = async (req, res) => {
         const { id } = req.params;
         const { content_tm, content_ru, active } = req.body;
 
-        const updatedAbout = await About.findByIdAndUpdate(id, {
+        await About.findByIdAndUpdate(id, {
             content_tm,
             content_ru,
             active
         });
 
-        updatedAbout.content_ru = content_ru;
-        updatedAbout.content_tm = content_tm;
-
         res.status(200).json({
             success: 1,
-            data: updatedAbout
         })
     } catch (err) {
         res.status(500).json({
