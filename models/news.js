@@ -34,6 +34,10 @@ const NewsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Sections'
     },
+    view: {
+        type: Number,
+        default: 0
+    },
     created_at: {
         type: Date,
         default: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),

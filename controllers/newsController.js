@@ -161,6 +161,10 @@ const getNewsDetail = async (req, res) => {
         const { id } = req.params;
 
         const found = await News.find({ _id: id });
+
+        found.content_ru = undefined;
+        found.content_tm = undefined;
+
         res.status(200).json({
             success: 1,
             data: found
