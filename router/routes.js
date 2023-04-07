@@ -10,6 +10,7 @@ const aboutController = require('../controllers/aboutController');
 const bannersController = require('../controllers/bannersController');
 const usersController = require('../controllers/usersController');
 const authController = require('../controllers/authController');
+const newsController = require('../controllers/newsController');
 
 // -------------------------------------------- Section Routes --------------------------------------------- //
 router.get('/section', sectionsController.getSections);
@@ -19,6 +20,10 @@ router.delete('/admin/section/delete/:id', sectionsController.deleteSection);
 
 
 //---------------------------------------------- News Routes -------------------------------------------------- //
+router.get('/news', newsController.getNews);
+router.post('/admin/news/create', newsController.createNews);
+router.patch('/admin/news/update/:id', newsController.updateNews);
+router.delete('/admin/news/delete/:id', newsController.deleteNews);
 
 //---------------------------------------------- Banners Routes ---------------------------------------------------- //
 router.get('/banner', bannersController.getBanner);

@@ -35,6 +35,10 @@ const getNews = async (req, res) => {
             limit = 10
         }
 
+        if (!page) {
+            page = 1
+        }
+
         page = parseInt(page);
         limit = parseInt(limit);
 
