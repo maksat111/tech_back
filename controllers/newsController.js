@@ -103,7 +103,61 @@ const updateNews = async (req, res) => {
 }
 
 
+const getNewsBySection = async (req, res) => {
+    try {
+        const { id } = req.params;
+        let { limit, page } = req.query;
+
+        if (!limit || limit > 100) {
+            limit = 10
+        }
+
+        if (!page) {
+            page = 1
+        }
+
+        page = parseInt(page);
+        limit = parseInt(limit);
+
+        const found = await News.find({ show_at: { $lt: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss') }, section: id })
+            .skip(limit * (page - 1))
+            .limit(limit)
+            .sort({ show_at: 'asc' })
+            .exec();
+
+        res.status(200).json({
+            success: 1,
+            data: found
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: 0,
+            msg: err.message
+        })
+    }
+}
+
+
+const getNewsDetail = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const found = await News.find({ _id: id });
+        res.status(200).json({
+            success: 1,
+            data: found
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: 0,
+            msg: err.message
+        })
+    }
+}
+
 exports.getNews = getNews;
 exports.createNews = createNews;
 exports.deleteNews = deleteNews;
 exports.updateNews = updateNews;
+exports.getNewsDetail = getNewsDetail;
+exports.getNewsBySection = getNewsBySection;
