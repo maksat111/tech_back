@@ -23,7 +23,7 @@ const Login = async (req, res) => {
             return res.status(200).json({ success: 1, data: { ...foundUser._doc, token } });
         }
 
-        res.status(200).json({ success: 0, msg: 'Invalid username or password!' });
+        res.status(400).json({ success: 0, msg: 'Invalid username or password!' });
     } catch (err) {
         res.status(500).json({
             success: 0,
