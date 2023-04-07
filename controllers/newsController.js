@@ -1,8 +1,11 @@
 const News = require('../models/news');
 const date = require('date-and-time');
+const imageUpload = require('../helper/imageUpload');
 
 const createNews = async (req, res) => {
     try {
+        let img = '';
+
         const { title_tm, title_ru, content_tm, content_ru, author, phone_number, section, show_at } = req.body;
 
         if (!title_tm || !title_ru || !content_ru || !content_tm || !section) {
@@ -10,6 +13,11 @@ const createNews = async (req, res) => {
                 success: 0,
                 msg: 'Missing fields!'
             })
+        }
+
+        if (req.files?.image) {
+            img = await imageUpload(req.files.image.name, req.files.image.data);
+            req.body.image = img;
         }
 
         const newNews = await News.create(req.body);
@@ -74,6 +82,8 @@ const deleteNews = async (req, res) => {
             return res.status(200).json({ success: 0, msg: 'No News in this id!' });
         }
 
+        foundNews.image !== '' && await fs.unlinkSync(found.image);
+
         const deletedNews = await News.deleteOne({ _id: id });
 
         res.status(200).json({
@@ -91,6 +101,11 @@ const deleteNews = async (req, res) => {
 const updateNews = async (req, res) => {
     try {
         const { id } = req.params;
+
+        if (req.files?.image) {
+            img = await imageUpload(req.files.image.name, req.files.image.data);
+            req.body.image = img;
+        }
 
         await News.findByIdAndUpdate(id, req.body);
 

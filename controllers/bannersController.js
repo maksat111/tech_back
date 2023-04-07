@@ -102,7 +102,7 @@ const deleteBanner = async (req, res) => {
 
         const deletedBanner = await Banner.deleteOne({ _id: id });
 
-        await fs.unlinkSync(found.image);
+        found.image !== '' && await fs.unlinkSync(found.image);
 
         res.status(200).json({
             success: 1,
