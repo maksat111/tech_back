@@ -1,4 +1,5 @@
 const Banner = require('../models/banners');
+const imageUpload = require('../helper/imageUpload');
 const fs = require('fs');
 
 const getBanner = async (req, res) => {
@@ -22,16 +23,11 @@ const createBanner = async (req, res) => {
         const { url, active } = req.body;
 
         if (req.files?.image) {
-            let randomNumber_tm = Math.floor(Math.random() * 999999999999);
-            var img_direction = `./uploads/` + randomNumber_tm + `${req.files.image.name}`;
-            fs.writeFile(img_direction, req.files.image.data, function (err) { console.log(err) });
+            img = await imageUpload(req.files.image.name, req.files.image.data);
+            req.body.image = img;
         }
 
-        const newBanner = await Banner.create({
-            url,
-            active,
-            image: req.files?.image ? img_direction : ''
-        });
+        const newBanner = await Banner.create(req.body);
 
         res.status(201).json({
             success: 1,
@@ -61,26 +57,14 @@ const updateBanner = async (req, res) => {
         }
 
         if (req.files?.image) {
-            found.image !== "" && await fs.unlinkSync(found.image);
-            const randomNumber_tm = Math.floor(Math.random() * 999999999999);
-            var img_direction = `./uploads/` + randomNumber_tm + `${req.files.image.name}`;
-            fs.writeFile(img_direction, req.files.image.data, function (err) { console.log(err) });
+            img = await imageUpload(req.files.image.name, req.files.image.data);
+            req.body.image = img;
         }
 
-
-        const updatedBanner = await Banner.findByIdAndUpdate(id, {
-            url,
-            active,
-            image: req.files ? img_direction : found.image
-        });
-
-        updatedBanner.url = url;
-        updatedBanner.active = active;
-        updatedBanner.image = req.files ? img_direction : found.image;
+        const updatedBanner = await Banner.findByIdAndUpdate(id, req.body);
 
         res.status(200).json({
             success: 1,
-            data: updatedBanner
         })
     } catch (err) {
         res.status(500).json({

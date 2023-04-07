@@ -82,7 +82,7 @@ const deleteNews = async (req, res) => {
             return res.status(200).json({ success: 0, msg: 'No News in this id!' });
         }
 
-        foundNews.image !== '' && await fs.unlinkSync(found.image);
+        foundNews.image !== '' && await fs.unlinkSync(foundNews.image);
 
         const deletedNews = await News.deleteOne({ _id: id });
 
