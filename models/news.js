@@ -30,12 +30,16 @@ const NewsSchema = new mongoose.Schema({
         type: String,
         default: null
     },
-    section_id: {
+    section: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Sections'
     },
     created_at: {
-        type: String,
+        type: Date,
+        default: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
+    },
+    show_at: {
+        type: Date,
         default: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
     },
 });
