@@ -160,10 +160,9 @@ const getNewsDetail = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const found = await News.find({ _id: id });
+        const found = await News.findOne({ _id: id });
 
-        found.content_ru = undefined;
-        found.content_tm = undefined;
+        await News.findByIdAndUpdate(id, { view: ++found.view })
 
         res.status(200).json({
             success: 1,

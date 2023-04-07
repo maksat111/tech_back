@@ -22,6 +22,7 @@ router.delete('/admin/section/delete/:id', sectionsController.deleteSection);
 //---------------------------------------------- News Routes -------------------------------------------------- //
 router.get('/news/list', newsController.getNews);
 router.get('/news/list/:id', newsController.getNewsBySection);
+router.get('/news/detail/:id', newsController.getNewsDetail);
 router.post('/admin/news/create', newsController.createNews);
 router.patch('/admin/news/update/:id', newsController.updateNews);
 router.delete('/admin/news/delete/:id', newsController.deleteNews);
