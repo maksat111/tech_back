@@ -7,7 +7,7 @@ const createNews = async (req, res) => {
         let img = '';
 
         const { title_tm, title_ru, content_tm, content_ru, section } = req.body;
-        req.body.show_at = date.format(req.body.show_at, 'YYYY-MM-DD HH:mm:ss')
+        // req.body.show_at = date.format(req.body.show_at, 'YYYY-MM-DD HH:mm:ss')
 
         if (!title_tm || !title_ru || !content_ru || !content_tm || !section) {
             return res.status(200).json({
@@ -51,11 +51,11 @@ const getNews = async (req, res) => {
         page = parseInt(page);
         limit = parseInt(limit);
 
-        const found = await News.find({ show_at: { $lt: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss') } })
+        const found = await News.find({ show_at: { $lt: Date.now() } })
             .skip(limit * (page - 1))
             .populate('section')
             .limit(limit)
-            .sort({ show_at: 'asc' })
+            .sort({ show_at: 'desc' })
             .exec();
 
         const count = await News.countDocuments();
@@ -143,11 +143,11 @@ const getNewsBySection = async (req, res) => {
         page = parseInt(page);
         limit = parseInt(limit);
 
-        const found = await News.find({ show_at: { $lt: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss') }, section: id })
+        const found = await News.find({ show_at: { $lt: Date.now() }, section: id })
             .skip(limit * (page - 1))
             .limit(limit)
             .populate('section')
-            .sort({ show_at: 'asc' })
+            .sort({ show_at: 'desc' })
             .exec();
 
         found.content_ru = undefined;
