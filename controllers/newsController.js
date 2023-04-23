@@ -5,9 +5,7 @@ const imageUpload = require('../helper/imageUpload');
 const createNews = async (req, res) => {
     try {
         let img = '';
-
         const { title_tm, title_ru, content_tm, content_ru, section } = req.body;
-        // req.body.show_at = date.format(req.body.show_at, 'YYYY-MM-DD HH:mm:ss')
 
         if (!title_tm || !title_ru || !content_ru || !content_tm || !section) {
             return res.status(200).json({

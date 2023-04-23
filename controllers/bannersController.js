@@ -6,9 +6,7 @@ const path = require('path');
 const getBanner = async (req, res) => {
     try {
         const banners = await Banner.find();
-        banners.forEach(item => {
-            item.image = path.join(__dirname, '..', item.image);
-        })
+
         res.status(200).json({
             success: 1,
             data: banners
@@ -104,4 +102,3 @@ exports.getBanner = getBanner;
 exports.createBanner = createBanner;
 exports.updateBanner = updateBanner;
 exports.deleteBanner = deleteBanner;
-// exports.getImage = getImage;

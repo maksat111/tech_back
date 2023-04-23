@@ -11,7 +11,7 @@ const app = express();
 
 // ------------------------------------- Middlewares ------------------------------------ //
 app.use(fileupload());
-app.use("/uploads", express.static("/uploads"));
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: "10mb" }));
 app.use(cors());
