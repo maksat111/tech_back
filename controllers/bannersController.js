@@ -1,6 +1,7 @@
 const Banner = require('../models/banners');
 const imageUpload = require('../helper/imageUpload');
 const fs = require('fs');
+const path = require('path');
 
 const getBanner = async (req, res) => {
     try {
@@ -100,3 +101,4 @@ exports.getBanner = getBanner;
 exports.createBanner = createBanner;
 exports.updateBanner = updateBanner;
 exports.deleteBanner = deleteBanner;
+// exports.getImage = getImage;

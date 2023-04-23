@@ -45,11 +45,14 @@ router.get('/admin/about', auth, aboutController.getAboutContent);
 
 //---------------------------------------------- User Routes --------------------------------------------------- //
 router.get('/admin/user/list', auth, usersController.getUser);
-router.post('/admin/user/create', usersController.createUser);
+router.post('/admin/user/create', auth, usersController.createUser);
 router.patch('/admin/user/update/:id', auth, usersController.updateUser);
 router.delete('/admin/user/delete/:id', auth, usersController.deleteUser);
 
 //---------------------------------------------- Auth Routes --------------------------------------------------- //
 router.post('/admin/login', authController.Login);
+
+//---------------------------------------------- Auth Routes --------------------------------------------------- //
+// router.get('/admin/:img', auth, bannersController.getImage);
 
 module.exports = router;
