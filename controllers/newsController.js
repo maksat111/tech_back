@@ -145,6 +145,7 @@ const getNewsBySection = async (req, res) => {
         const found = await News.find({ show_at: { $lt: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss') }, section: id })
             .skip(limit * (page - 1))
             .limit(limit)
+            .populate('section')
             .sort({ show_at: 'asc' })
             .exec();
 
@@ -169,7 +170,7 @@ const getNewsDetail = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const found = await News.findOne({ _id: id });
+        const found = await News.findOne({ _id: id }).populate('section');
 
         await News.findByIdAndUpdate(id, { view: ++found.view });
 
