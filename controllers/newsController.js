@@ -52,6 +52,7 @@ const getNews = async (req, res) => {
 
         const found = await News.find({ show_at: { $lt: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss') } })
             .skip(limit * (page - 1))
+            .populate('section')
             .limit(limit)
             .sort({ show_at: 'asc' })
             .exec();
