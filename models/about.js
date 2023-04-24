@@ -10,10 +10,10 @@ const AboutSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
-    active: {
-        type: Boolean,
-        default: false
-    },
+    // active: {
+    //     type: Boolean,
+    //     default: false
+    // },
     created_at: {
         type: String,
         default: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
