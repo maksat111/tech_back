@@ -14,13 +14,13 @@ const app = express();
 app.use(fileupload());
 app.use('/uploads', express.static("uploads"));
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('dev'));
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "*");
-    res.header("Content-Type", "multipart/form-data");
+    res.header("Content-Type", "application/json");
 
     if (req.method === 'OPTIONS') {
         res.header('Access-Control-Allow-Methods', 'GET, POST, DELETE, PATCH, PUT')
