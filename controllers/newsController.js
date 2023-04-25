@@ -1,6 +1,7 @@
 const News = require('../models/news');
 const date = require('date-and-time');
 const imageUpload = require('../helper/imageUpload');
+const fs = require('fs');
 
 const createNews = async (req, res) => {
     try {
@@ -13,7 +14,7 @@ const createNews = async (req, res) => {
                 msg: 'Missing fields!'
             })
         }
-
+        console.log(req.files);
         if (req.files?.image) {
             img = await imageUpload(req.files.image.name, req.files.image.data);
             req.body.image = img;
