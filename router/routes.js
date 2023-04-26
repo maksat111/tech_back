@@ -26,28 +26,28 @@ router.get('/news/list/:id', newsController.getNewsBySection);
 router.get('/news/detail/:id', newsController.getNewsDetail);
 router.post('/admin/news/create', auth, newsController.createNews);
 router.patch('/admin/news/update/:id', auth, newsController.updateNews);
-router.delete('/admin/news/delete/:id', auth, newsController.deleteNews);
+router.post('/admin/news/delete/:id', auth, newsController.deleteNews);
 router.get('/admin/news/list', auth, newsController.getNews);
 
 //---------------------------------------------- Banners Routes ---------------------------------------------------- //
 router.get('/banner/list', bannersController.getBanner);
 router.post('/admin/banner/create', auth, bannersController.createBanner);
 router.patch('/admin/banner/update/:id', auth, bannersController.updateBanner);
-router.delete('/admin/banner/delete/:id', auth, bannersController.deleteBanner);
+router.post('/admin/banner/delete/:id', auth, bannersController.deleteBanner);
 router.get('/admin/banner/list', auth, bannersController.getBanner);
 
 //---------------------------------------------- About Routes --------------------------------------------------- //
 router.get('/about', aboutController.getAboutContent);
 router.post('/admin/about/create', auth, aboutController.createAboutContent);
 router.patch('/admin/about/update/:id', auth, aboutController.updateAboutContent);
-router.delete('/admin/about/delete/:id', auth, aboutController.deleteAboutContent);
+router.post('/admin/about/delete/:id', auth, aboutController.deleteAboutContent);
 router.get('/admin/about', auth, aboutController.getAboutContent);
 
 //---------------------------------------------- User Routes --------------------------------------------------- //
 router.get('/admin/user/list', auth, usersController.getUser);
 router.post('/admin/user/create', auth, usersController.createUser);
 router.patch('/admin/user/update/:id', auth, usersController.updateUser);
-router.delete('/admin/user/delete/:id', auth, usersController.deleteUser);
+router.post('/admin/user/delete/:id', auth, usersController.deleteUser);
 
 //---------------------------------------------- Auth Routes --------------------------------------------------- //
 router.post('/admin/login', authController.Login);
