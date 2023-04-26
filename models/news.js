@@ -38,14 +38,13 @@ const NewsSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    created_at: {
-        type: Date,
-        default: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
-    },
     show_at: {
         type: Date,
-        default: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
+        default: new Date(),
     },
-});
+},
+    {
+        timestamps: true
+    });
 
 module.exports = mongoose.model("News", NewsSchema);

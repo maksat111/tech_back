@@ -18,10 +18,8 @@ const UsersSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    created_at: {
-        type: String,
-        default: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
-    },
+}, {
+    timestamps: true
 });
 
 module.exports = mongoose.model("Users", UsersSchema);

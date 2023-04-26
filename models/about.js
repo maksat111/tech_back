@@ -14,10 +14,9 @@ const AboutSchema = new mongoose.Schema({
     //     type: Boolean,
     //     default: false
     // },
-    created_at: {
-        type: String,
-        default: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
-    },
-});
+},
+    {
+        timestamps: true
+    });
 
 module.exports = mongoose.model("About", AboutSchema);

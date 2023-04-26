@@ -9,11 +9,9 @@ const SectionsSchema = new mongoose.Schema({
     name_ru: {
         type: String,
         default: 'No name'
-    },
-    created_at: {
-        type: String,
-        default: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
-    },
+    }
+}, {
+    timestamps: true
 });
 
 module.exports = mongoose.model("Sections", SectionsSchema);
