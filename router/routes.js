@@ -16,7 +16,7 @@ const newsController = require('../controllers/newsController');
 router.get('/section/list', sectionsController.getSections);
 router.post('/admin/section/create', auth, sectionsController.create);
 router.patch('/admin/section/update/:id', auth, sectionsController.update);
-router.delete('/admin/section/delete/:id', auth, sectionsController.deleteSection);
+router.post('/admin/section/delete/:id', auth, sectionsController.deleteSection);
 router.get('/admin/section/list', auth, sectionsController.getSections);
 
 
