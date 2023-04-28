@@ -54,7 +54,7 @@ const getNews = async (req, res) => {
             .skip(limit * (page - 1))
             .populate('section')
             .limit(limit)
-            .sort({ show_at: 'desc' })
+            .sort({ createdAt: 'desc' })
             .exec();
 
         const count = await News.countDocuments();
