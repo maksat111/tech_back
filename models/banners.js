@@ -14,10 +14,8 @@ const BannersSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
-    created_at: {
-        type: String,
-        default: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
-    },
+}, {
+    timestamps: true,
 });
 
 module.exports = mongoose.model("Banners", BannersSchema);

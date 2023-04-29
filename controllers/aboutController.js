@@ -3,8 +3,7 @@ const About = require('../models/about');
 const getAboutContent = async (req, res) => {
     try {
         const content = await About.find();
-        const jsonData = JSON.stringify(content);
-        res.set('Content-Type', "application/json");
+
         res.status(200).json({
             success: 1,
             data: content

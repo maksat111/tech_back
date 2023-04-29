@@ -52,7 +52,4 @@ router.post('/admin/user/delete/:id', auth, usersController.deleteUser);
 //---------------------------------------------- Auth Routes --------------------------------------------------- //
 router.post('/admin/login', authController.Login);
 
-//---------------------------------------------- Auth Routes --------------------------------------------------- //
-// router.get('/admin/:img', auth, bannersController.getImage);
-
 module.exports = router;
