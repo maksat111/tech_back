@@ -57,6 +57,7 @@ const updateBanner = async (req, res) => {
 
         if (req.files?.image) {
             img = await imageUpload(req.files.image.name, req.files.image.data);
+            await fs.unlinkSync(found.image)
             req.body.image = img;
         }
 
