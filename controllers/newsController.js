@@ -146,7 +146,7 @@ const getNewsBySection = async (req, res) => {
             .skip(limit * (page - 1))
             .limit(limit)
             .populate('section')
-            .sort({ show_at: 'desc' })
+            .sort({ createdAt: 'desc' })
             .exec();
 
         found.content_ru = undefined;
