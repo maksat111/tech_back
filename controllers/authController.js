@@ -4,7 +4,7 @@ const Admin = require('../models/admins');
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
-const createUser = async (req, res) => {
+const registerUser = async (req, res) => {
     try {
         const { name, surname, username, password } = req.body;
         const foundUser = await User.findOne({ username });
@@ -18,7 +18,8 @@ const createUser = async (req, res) => {
         const createdUser = await User.create({
             name,
             surname,
-            username,
+            email,
+            phone_number,
             password: encryptedPassword,
         });
 
@@ -60,7 +61,7 @@ const LoginUser = async (req, res) => {
     }
 }
 
-const createAdmin = async (req, res) => {
+const registerAdmin = async (req, res) => {
     try {
         const { name, surname, email, phone_number, password } = req.body;
         const foundAdmin = await Admin.findOne({ $or: [{ email }, { phone_number }] });
@@ -120,5 +121,5 @@ const LoginAdmin = async (req, res) => {
 
 exports.LoginUser = LoginUser;
 exports.LoginAdmin = LoginAdmin;
-exports.createAdmin = createAdmin;
-exports.createUser = createUser;
+exports.registerAdmin = registerAdmin;
+exports.registerUser = registerUser;
