@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const NewsSchema = new mongoose.Schema({
+const SubcategoriesSchema = new mongoose.Schema({
     name_tm: {
         type: String,
         default: 'No Name'
@@ -26,4 +26,4 @@ const NewsSchema = new mongoose.Schema({
         timestamps: true
     });
 
-module.exports = mongoose.model("News", NewsSchema);
+module.exports = mongoose.model("Subcategories", SubcategoriesSchema);
