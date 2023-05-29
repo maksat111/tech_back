@@ -6,7 +6,6 @@ const auth = require('../middlewares/auth');
 
 // ------------------------------------------- Controllers --------------------------------------------- //
 const sectionsController = require('../controllers/sectionsController');
-const aboutController = require('../controllers/aboutController');
 const bannersController = require('../controllers/bannersController');
 const usersController = require('../controllers/usersController');
 const authController = require('../controllers/authController');
@@ -36,12 +35,6 @@ router.patch('/admin/banner/update/:id', auth, bannersController.updateBanner);
 router.post('/admin/banner/delete/:id', auth, bannersController.deleteBanner);
 router.get('/admin/banner/list', auth, bannersController.getBanner);
 
-//---------------------------------------------- About Routes --------------------------------------------------- //
-router.get('/about', aboutController.getAboutContent);
-router.post('/admin/about/create', auth, aboutController.createAboutContent);
-router.patch('/admin/about/update/:id', auth, aboutController.updateAboutContent);
-router.post('/admin/about/delete/:id', auth, aboutController.deleteAboutContent);
-router.get('/admin/about', auth, aboutController.getAboutContent);
 
 //---------------------------------------------- User Routes --------------------------------------------------- //
 router.get('/admin/user/list', auth, usersController.getUser);

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const date = require('date-and-time');
 
 const UsersSchema = new mongoose.Schema({
     name: {
@@ -10,8 +9,12 @@ const UsersSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    username: {
+    email: {
         type: String,
+        required: true
+    },
+    phone_number: {
+        type: Number,
         required: true
     },
     password: {
