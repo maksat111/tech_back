@@ -1,7 +1,6 @@
 const Banner = require('../models/banners');
 const imageUpload = require('../helper/imageUpload');
 const fs = require('fs');
-const path = require('path');
 
 const getBanner = async (req, res) => {
     try {
