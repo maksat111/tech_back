@@ -6,11 +6,11 @@ require('dotenv').config();
 
 const registerUser = async (req, res) => {
     try {
-        const { name, surname, username, password } = req.body;
-        const foundUser = await User.findOne({ username });
+        const { name, surname, phone_number, email, password } = req.body;
+        const foundUser = await User.findOne({ $or: [{ email }, { phone_number }] });
 
         if (foundUser) {
-            return res.status(403).json({ success: 0, message: 'This username is not aviable!' });
+            return res.status(403).json({ success: 0, message: 'This creadentials are not aviable!' });
         }
 
         const encryptedPassword = await bcrypt.hash(password, 10);
@@ -52,7 +52,7 @@ const LoginUser = async (req, res) => {
             return res.status(200).json({ success: 1, data: { ...foundUser._doc, token } });
         }
 
-        res.status(400).json({ success: 0, msg: 'Invalid username or password!' });
+        res.status(400).json({ success: 0, msg: 'Invalid creadentils!' });
     } catch (err) {
         res.status(500).json({
             success: 0,
@@ -93,23 +93,23 @@ const LoginAdmin = async (req, res) => {
     try {
         const { password, email, phone_number } = req.body;
 
-        const foundUser = await User.findOne({ username });
+        const foundAdmin = await User.findOne({ $or: [{ email }, { phone_number }] });
 
-        if (foundUser && (await bcrypt.compare(password, foundUser.password))) {
+        if (foundAdmin && (await bcrypt.compare(password, foundAdmin.password))) {
             const token = jwt.sign(
-                { user_id: foundUser._id, username },
+                { user_id: foundAdmin._id, username },
                 process.env.TOKEN_KEY_ADMIN,
                 {
                     expiresIn: "15h",
                 }
             );
 
-            foundUser.password = undefined;
+            foundAdmin.password = undefined;
 
-            return res.status(200).json({ success: 1, data: { ...foundUser._doc, token } });
+            return res.status(200).json({ success: 1, data: { ...foundAdmin._doc, token } });
         }
 
-        res.status(400).json({ success: 0, msg: 'Invalid username or password!' });
+        res.status(400).json({ success: 0, msg: 'Invalid credentials!' });
     } catch (err) {
         res.status(500).json({
             success: 0,
