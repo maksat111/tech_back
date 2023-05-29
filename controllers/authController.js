@@ -4,6 +4,33 @@ const Admin = require('../models/admins');
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
+const createUser = async (req, res) => {
+    try {
+        const { name, surname, username, password } = req.body;
+        const foundUser = await User.findOne({ username });
+
+        if (foundUser) {
+            return res.status(403).json({ success: 0, message: 'This username is not aviable!' });
+        }
+
+        const encryptedPassword = await bcrypt.hash(password, 10);
+
+        const createdUser = await User.create({
+            name,
+            surname,
+            username,
+            password: encryptedPassword,
+        });
+
+        res.status(201).json({ success: 1, data: createdUser });
+    } catch (err) {
+        res.status(500).json({
+            success: 0,
+            message: err.message
+        });
+    }
+}
+
 const LoginUser = async (req, res) => {
     try {
         const { password, email, phone_number } = req.body;
@@ -94,3 +121,4 @@ const LoginAdmin = async (req, res) => {
 exports.LoginUser = LoginUser;
 exports.LoginAdmin = LoginAdmin;
 exports.createAdmin = createAdmin;
+exports.createUser = createUser;

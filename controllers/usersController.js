@@ -1,34 +1,6 @@
 const User = require('../models/users');
 const bcrypt = require('bcryptjs');
 
-const createUser = async (req, res) => {
-    try {
-        const { name, surname, username, password } = req.body;
-        const foundUser = await User.findOne({ username });
-
-        if (foundUser) {
-            return res.status(403).json({ success: 0, message: 'This username is not aviable!' });
-        }
-
-        const encryptedPassword = await bcrypt.hash(password, 10);
-
-        const createdUser = await User.create({
-            name,
-            surname,
-            username,
-            password: encryptedPassword,
-        });
-
-        res.status(201).json({ success: 1, data: createdUser });
-    } catch (err) {
-        res.status(500).json({
-            success: 0,
-            message: err.message
-        });
-    }
-}
-
-
 const getUser = async (req, res) => {
     try {
         const Users = await User.find();
@@ -96,7 +68,7 @@ const updateUser = async (req, res) => {
     }
 }
 
-exports.createUser = createUser;
+
 exports.getUser = getUser;
 exports.deleteUser = deleteUser;
 exports.updateUser = updateUser;
