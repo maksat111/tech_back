@@ -11,6 +11,7 @@ const bannersController = require('../controllers/bannersController');
 const categoriesController = require('../controllers/categoriesController');
 const subcategoriesController = require('../controllers/subcategoriesController');
 const usersController = require('../controllers/usersController');
+const brandsController = require('../controllers/brandsController');
 
 // -------------------------------------------- Admin Routes --------------------------------------------- //
 router.get('/list', auth, adminsController.getAdmin);
@@ -45,5 +46,11 @@ router.get('/user/list', auth, usersController.getUser);
 router.post('/user/create', auth, authController.registerUser);
 router.patch('/user/update/:id', auth, usersController.updateUser);
 router.delete('/user/delete/:id', auth, usersController.deleteUser);
+
+//---------------------------------------------- Users Routes --------------------------------------------------- //
+router.get('/user/list', auth, brandsController.getBrands);
+router.post('/user/create', auth, brandsController.create);
+router.patch('/user/update/:id', auth, brandsController.update);
+router.delete('/user/delete/:id', auth, brandsController.deleteBrand);
 
 module.exports = router;
