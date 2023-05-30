@@ -19,7 +19,7 @@ const getCategories = async (req, res) => {
 
 const create = async (req, res) => {
     try {
-        const { name_tm, name_ru, name_en } = req.body;
+        const { name_tm, name_ru, name_en, is_active } = req.body;
 
         const found = await Category.findOne({ name_tm, name_ru, name_en });
 
@@ -39,6 +39,7 @@ const create = async (req, res) => {
             name_tm,
             name_ru,
             name_en,
+            is_active,
             image: req.body.image
         });
 
@@ -58,7 +59,7 @@ const create = async (req, res) => {
 const update = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name_tm, name_ru, name_en } = req.body;
+        const { name_tm, name_ru, name_en, is_active } = req.body;
 
         const found = await Category.findOne({ _id: id });
 
@@ -79,12 +80,14 @@ const update = async (req, res) => {
             name_tm,
             name_ru,
             name_en,
+            is_active,
             image: req.body.image
         });
 
         updatedCategory.name_ru = name_ru;
         updatedCategory.name_tm = name_tm;
         updatedCategory.name_en = name_en;
+        updatedCategory.is_active = is_active;
         updatedCategory.image = req.body.image;
 
         res.status(200).json({

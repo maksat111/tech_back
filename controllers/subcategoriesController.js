@@ -3,7 +3,8 @@ const imageUpload = require('../helper/imageUpload');
 
 const getSubcategories = async (req, res) => {
     try {
-        const subcategories = await Subcategory.find();
+        const { category } = req.query;
+        const subcategories = await Subcategory.find(category ? { category } : {});
         res.status(200).json({
             success: 1,
             data: subcategories
@@ -19,7 +20,7 @@ const getSubcategories = async (req, res) => {
 
 const create = async (req, res) => {
     try {
-        const { name_tm, name_ru, name_en, category } = req.body;
+        const { name_tm, name_ru, name_en, category, is_active } = req.body;
 
         const found = await Subcategory.findOne({ name_tm, name_ru, name_en });
 
@@ -40,6 +41,7 @@ const create = async (req, res) => {
             name_ru,
             name_en,
             category,
+            is_active,
             image: req.body.image
         });
 
@@ -59,7 +61,7 @@ const create = async (req, res) => {
 const update = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name_tm, name_ru, name_en, category } = req.body;
+        const { name_tm, name_ru, name_en, category, is_active } = req.body;
 
         const found = await Subcategory.findOne({ _id: id });
 
@@ -81,6 +83,7 @@ const update = async (req, res) => {
             name_ru,
             name_en,
             category,
+            is_active,
             image: req.body.image
         });
 
@@ -88,6 +91,7 @@ const update = async (req, res) => {
         updatedSubCategory.name_tm = name_tm;
         updatedSubCategory.name_en = name_en;
         updatedSubCategory.category = category;
+        updatedSubCategory.is_active = is_active;
         updatedSubCategory.image = req.body.image;
 
         res.status(200).json({

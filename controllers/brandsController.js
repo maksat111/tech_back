@@ -19,9 +19,9 @@ const getBrands = async (req, res) => {
 
 const create = async (req, res) => {
     try {
-        const { name_tm, name_ru, name_en } = req.body;
+        const { name, is_active } = req.body;
 
-        const found = await Brand.findOne({ name_tm, name_ru, name_en });
+        const found = await Brand.findOne({ name });
 
         if (found) {
             return res.status(200).json({
@@ -36,10 +36,9 @@ const create = async (req, res) => {
         }
 
         const newBrand = await Brand.create({
-            name_tm,
-            name_ru,
-            name_en,
-            image: req.body.image
+            name,
+            image: req.body.image,
+            is_active
         });
 
         res.status(201).json({
@@ -58,7 +57,7 @@ const create = async (req, res) => {
 const update = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name_tm, name_ru, name_en } = req.body;
+        const { name, is_active } = req.body;
 
         const found = await Brand.findOne({ _id: id });
 
@@ -76,15 +75,13 @@ const update = async (req, res) => {
         }
 
         const updatedBrand = await Category.findByIdAndUpdate(id, {
-            name_tm,
-            name_ru,
-            name_en,
-            image: req.body.image
+            name,
+            image: req.body.image,
+            is_active
         });
 
-        updatedBrand.name_ru = name_ru;
-        updatedBrand.name_tm = name_tm;
-        updatedBrand.name_en = name_en;
+        updatedBrand.name = name;
+        updatedBrand.is_active = is_active;
         updatedBrand.image = req.body.image;
 
         res.status(200).json({

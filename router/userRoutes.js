@@ -9,6 +9,7 @@ const authController = require('../controllers/authController');
 const bannersController = require('../controllers/bannersController');
 const categoriesController = require('../controllers/categoriesController');
 const subcategoriesController = require('../controllers/subcategoriesController');
+const brandsController = require('../controllers/brandsController');
 
 // -------------------------------------------- Auth Routes --------------------------------------------- //
 router.post('/login', auth, authController.LoginUser);
@@ -22,5 +23,8 @@ router.get('/category/list', auth, categoriesController.getCategories);
 
 // -------------------------------------------- Subcategories Routes --------------------------------------------- //
 router.get('/subcategory/list', auth, subcategoriesController.getSubcategories);
+
+// -------------------------------------------- Subcategories Routes --------------------------------------------- //
+router.get('/brand/list', auth, brandsController.getBrands);
 
 module.exports = router;

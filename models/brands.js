@@ -1,15 +1,7 @@
 const mongoose = require('mongoose');
 
 const BrandsSchema = new mongoose.Schema({
-    name_tm: {
-        type: String,
-        default: ''
-    },
-    name_en: {
-        type: String,
-        default: ''
-    },
-    name_ru: {
+    name: {
         type: String,
         default: ''
     },

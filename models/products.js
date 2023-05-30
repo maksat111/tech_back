@@ -17,6 +17,14 @@ const ProductsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Subcategories'
     },
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Categories'
+    },
+    brand: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Brands'
+    },
     main_image: {
         type: String,
         default: ''
