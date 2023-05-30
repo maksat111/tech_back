@@ -47,7 +47,7 @@ router.post('/user/create', auth, authController.registerUser);
 router.patch('/user/update/:id', auth, usersController.updateUser);
 router.delete('/user/delete/:id', auth, usersController.deleteUser);
 
-//---------------------------------------------- Users Routes --------------------------------------------------- //
+//---------------------------------------------- Brands Routes --------------------------------------------------- //
 router.get('/user/list', auth, brandsController.getBrands);
 router.post('/user/create', auth, brandsController.create);
 router.patch('/user/update/:id', auth, brandsController.update);

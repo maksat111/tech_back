@@ -24,7 +24,7 @@ router.get('/category/list', auth, categoriesController.getCategories);
 // -------------------------------------------- Subcategories Routes --------------------------------------------- //
 router.get('/subcategory/list', auth, subcategoriesController.getSubcategories);
 
-// -------------------------------------------- Subcategories Routes --------------------------------------------- //
+// -------------------------------------------- Brands Routes --------------------------------------------- //
 router.get('/brand/list', auth, brandsController.getBrands);
 
 module.exports = router;
