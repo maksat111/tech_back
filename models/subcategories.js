@@ -20,6 +20,10 @@ const SubcategoriesSchema = new mongoose.Schema({
     image: {
         type: String,
         default: ''
+    },
+    is_active: {
+        type: Boolean,
+        default: false
     }
 },
     {

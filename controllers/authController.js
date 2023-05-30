@@ -63,7 +63,7 @@ const LoginUser = async (req, res) => {
 
 const registerAdmin = async (req, res) => {
     try {
-        const { name, surname, email, phone_number, password } = req.body;
+        const { name, surname, email, phone_number, password, is_active } = req.body;
         const foundAdmin = await Admin.findOne({ $or: [{ email }, { phone_number }] });
 
         if (foundAdmin) {
@@ -77,6 +77,7 @@ const registerAdmin = async (req, res) => {
             surname,
             email,
             phone_number,
+            is_active,
             password: encryptedPassword,
         });
 
@@ -93,7 +94,7 @@ const LoginAdmin = async (req, res) => {
     try {
         const { password, email, phone_number } = req.body;
 
-        const foundAdmin = await User.findOne({ $or: [{ email }, { phone_number }] });
+        const foundAdmin = await User.findOne({ $or: [{ email }, { phone_number }], is_active });
 
         if (foundAdmin && (await bcrypt.compare(password, foundAdmin.password))) {
             const token = jwt.sign(

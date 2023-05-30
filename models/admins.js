@@ -21,6 +21,10 @@ const AdminsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    is_active: {
+        type: Boolean,
+        default: false
+    }
 }, {
     timestamps: true
 });

@@ -9,6 +9,10 @@ const BannersSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
+    is_active: {
+        type: Boolean,
+        default: false
+    }
 }, {
     timestamps: true,
 });

@@ -43,19 +43,21 @@ const deleteAdmin = async (req, res) => {
 const updateAdmin = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, surname, email, phone_number } = req.body;
+        const { name, surname, email, phone_number, is_active } = req.body;
 
         let updatedUser = await User.findByIdAndUpdate(id, {
             name,
             surname,
             email,
-            phone_number
+            phone_number,
+            is_active
         });
 
         updatedUser.name = name;
         updatedUser.surname = surname;
         updatedUser.email = email;
         updatedUser.phone_number = phone_number;
+        updatedUser.is_active = is_active;
 
         res.status(200).json({
             success: 1,
