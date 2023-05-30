@@ -1,5 +1,4 @@
 const Admin = require('../models/admins');
-const bcrypt = require('bcryptjs');
 
 const getAdmin = async (req, res) => {
     try {
