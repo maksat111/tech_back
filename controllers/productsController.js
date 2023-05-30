@@ -1,9 +1,14 @@
 const Product = require('../models/products');
 const imageUpload = require('../helper/imageUpload');
 
-const getCategories = async (req, res) => {
+const getProducts = async (req, res) => {
     try {
-        const categories = await Product.find();
+        const categories = await Product.find().populate('brands category subcategory');
+
+        categories.forEach(item => {
+            item.subcategory.category = undefined;
+        })
+
         res.status(200).json({
             success: 1,
             data: categories
@@ -19,7 +24,7 @@ const getCategories = async (req, res) => {
 
 const create = async (req, res) => {
     try {
-        const { name_tm, name_ru, name_en, description_tm, description_en, description_ru, is_active } = req.body;
+        const { name_tm, name_ru, name_en } = req.body;
 
         const found = await Product.findOne({ name_tm, name_ru, name_en });
 
@@ -35,12 +40,7 @@ const create = async (req, res) => {
             req.body.image = img;
         }
 
-        const newCategory = await Category.create({
-            name_tm,
-            name_ru,
-            name_en,
-            image: req.body.image
-        });
+        const newCategory = await Category.create(req.body);
 
         res.status(201).json({
             success: 1,
@@ -58,14 +58,13 @@ const create = async (req, res) => {
 const update = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name_tm, name_ru, name_en } = req.body;
 
         const found = await Product.findOne({ _id: id });
 
         if (!found) {
             return res.status(404).json({
                 success: 0,
-                msg: "No Category on this id!"
+                msg: "No Product on this id!"
             });
         }
 
@@ -75,21 +74,10 @@ const update = async (req, res) => {
             req.body.image = img;
         }
 
-        const updatedCategory = await Product.findByIdAndUpdate(id, {
-            name_tm,
-            name_ru,
-            name_en,
-            image: req.body.image
-        });
-
-        updatedCategory.name_ru = name_ru;
-        updatedCategory.name_tm = name_tm;
-        updatedCategory.name_en = name_en;
-        updatedCategory.image = req.body.image;
+        const updatedCategory = await Product.findByIdAndUpdate(id, req.body);
 
         res.status(200).json({
             success: 1,
-            data: updatedCategory
         })
     } catch (err) {
         res.status(500).json({
@@ -100,13 +88,13 @@ const update = async (req, res) => {
 }
 
 
-const deleteCategory = async (req, res) => {
+const deleteProduct = async (req, res) => {
     try {
         const { id } = req.params;
         const found = await Product.findOne({ _id: id });
 
         if (!found) {
-            return res.status(200).json({ success: 0, msg: 'No Category in this id!' });
+            return res.status(200).json({ success: 0, msg: 'No Product in this id!' });
         }
 
         if (req.files?.image) {
@@ -115,7 +103,7 @@ const deleteCategory = async (req, res) => {
             req.body.image = img;
         }
 
-        const deletedCategory = await Product.deleteOne({ _id: id });
+        const deletedProduct = await Product.deleteOne({ _id: id });
 
         res.status(200).json({
             success: 1,
@@ -129,7 +117,7 @@ const deleteCategory = async (req, res) => {
     }
 }
 
-exports.getCategories = getCategories;
+exports.getProducts = getProducts;
 exports.create = create;
 exports.update = update;
-exports.deleteCategory = deleteCategory;
+exports.deleteProduct = deleteProduct;
