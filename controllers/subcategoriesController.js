@@ -1,12 +1,12 @@
-const Category = require('../models/categories');
+const Subcategory = require('../models/subcategories');
 const imageUpload = require('../helper/imageUpload');
 
-const getCategories = async (req, res) => {
+const getSubcategories = async (req, res) => {
     try {
-        const categories = await Category.find();
+        const subcategories = await Subcategory.find();
         res.status(200).json({
             success: 1,
-            data: categories
+            data: subcategories
         })
     } catch (err) {
         res.status(500).json({
@@ -19,14 +19,14 @@ const getCategories = async (req, res) => {
 
 const create = async (req, res) => {
     try {
-        const { name_tm, name_ru, name_en } = req.body;
+        const { name_tm, name_ru, name_en, category } = req.body;
 
-        const found = await Category.findOne({ name_tm, name_ru, name_en });
+        const found = await Subcategory.findOne({ name_tm, name_ru, name_en });
 
         if (found) {
             return res.status(200).json({
                 success: 0,
-                msg: "This category is already exists!"
+                msg: "This Subcategory is already exists!"
             });
         }
 
@@ -35,16 +35,17 @@ const create = async (req, res) => {
             req.body.image = img;
         }
 
-        const newCategory = await Category.create({
+        const newSubCategory = await Category.create({
             name_tm,
             name_ru,
             name_en,
+            category,
             image: req.body.image
         });
 
         res.status(201).json({
             success: 1,
-            data: newCategory
+            data: newSubCategory
         })
     } catch (err) {
         res.status(500).json({
@@ -58,14 +59,14 @@ const create = async (req, res) => {
 const update = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name_tm, name_ru, name_en } = req.body;
+        const { name_tm, name_ru, name_en, category } = req.body;
 
-        const found = await Category.findOne({ _id: id });
+        const found = await Subcategory.findOne({ _id: id });
 
         if (!found) {
             return res.status(404).json({
                 success: 0,
-                msg: "No Category on this id!"
+                msg: "No SubCategory on this id!"
             });
         }
 
@@ -75,21 +76,23 @@ const update = async (req, res) => {
             req.body.image = img;
         }
 
-        const updatedCategory = await Category.findByIdAndUpdate(id, {
+        const updatedSubCategory = await Subcategory.findByIdAndUpdate(id, {
             name_tm,
             name_ru,
             name_en,
+            category,
             image: req.body.image
         });
 
-        updatedCategory.name_ru = name_ru;
-        updatedCategory.name_tm = name_tm;
-        updatedCategory.name_en = name_en;
-        updatedCategory.image = req.body.image;
+        updatedSubCategory.name_ru = name_ru;
+        updatedSubCategory.name_tm = name_tm;
+        updatedSubCategory.name_en = name_en;
+        updatedSubCategory.category = category;
+        updatedSubCategory.image = req.body.image;
 
         res.status(200).json({
             success: 1,
-            data: updatedCategory
+            data: updatedSubCategory
         })
     } catch (err) {
         res.status(500).json({
@@ -100,10 +103,10 @@ const update = async (req, res) => {
 }
 
 
-const deleteCategory = async (req, res) => {
+const deleteSubCategory = async (req, res) => {
     try {
         const { id } = req.params;
-        const found = await Category.findOne({ _id: id });
+        const found = await Subcategory.findOne({ _id: id });
 
         if (!found) {
             return res.status(200).json({ success: 0, msg: 'No Category in this id!' });
@@ -115,7 +118,7 @@ const deleteCategory = async (req, res) => {
             req.body.image = img;
         }
 
-        const deletedCategory = await Category.deleteOne({ _id: id });
+        const deletedSubCategory = await Subcategory.deleteOne({ _id: id });
 
         res.status(200).json({
             success: 1,
@@ -129,7 +132,7 @@ const deleteCategory = async (req, res) => {
     }
 }
 
-exports.getCategories = getCategories;
+exports.getSubcategories = getSubcategories;
 exports.create = create;
 exports.update = update;
-exports.deleteCategory = deleteCategory;
+exports.deleteSubCategory = deleteSubCategory;

@@ -34,11 +34,11 @@ app.use((req, res, next) => {
 require('./config/dbConfig');
 
 // ---------------------------------------------- Routes -------------------------------------- //
-const AdminRouters = require('./router/adminRoutes');
-const UserRouters = require('./router/userRoutes');
+// const AdminRouters = require('./router/adminRoutes');
+// const UserRouters = require('./router/userRoutes');
 
-app.use('/api/admin', AdminRouters);
-app.use('/api', UserRouters);
+// app.use('/api/admin', AdminRouters);
+// app.use('/api', UserRouters);
 
 // -------------------------------------------- Error handling -------------------------------//
 app.use((req, res, next) => {
