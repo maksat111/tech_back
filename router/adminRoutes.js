@@ -1,48 +1,49 @@
-// const express = require('express');
-// const router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-// //--------------------------------------------- Middlewares ------------------------------------------------------- //
-// const auth = require('../middlewares/auth');
+//--------------------------------------------- Middlewares ------------------------------------------------------- //
+const auth = require('../middlewares/adminAuth');
 
-// // ------------------------------------------- Controllers --------------------------------------------- //
-// // const sectionsController = require('../controllers/sectionsController');
-// const bannersController = require('../controllers/bannersController');
-// const usersController = require('../controllers/usersController');
-// const authController = require('../controllers/authController');
-// const newsController = require('../controllers/newsController');
+// ------------------------------------------- Controllers --------------------------------------------- //
+const adminsController = require('../controllers/adminsController');
+const authController = require('../controllers/authController');
+const bannersController = require('../controllers/bannersController');
+const categoriesController = require('../controllers/categoriesController');
+const subcategoriesController = require('../controllers/subcategoriesController');
+const usersController = require('../controllers/usersController');
 
-// // -------------------------------------------- Section Routes --------------------------------------------- //
-// // router.get('/section/list', sectionsController.getSections);
-// // router.post('/admin/section/create', auth, sectionsController.create);
-// // router.patch('/admin/section/update/:id', auth, sectionsController.update);
-// // router.post('/admin/section/delete/:id', auth, sectionsController.deleteSection);
-// // router.get('/admin/section/list', auth, sectionsController.getSections);
+// -------------------------------------------- Admin Routes --------------------------------------------- //
+router.get('/list', auth, adminsController.getAdmin);
+router.patch('/update/:id', auth, adminsController.updateAdmin);
+router.delete('/delete/:id', auth, adminsController.deleteAdmin);
 
+// -------------------------------------------- Auth Routes --------------------------------------------- //
+router.post('/auth/register', auth, authController.registerAdmin);
+router.post('/auth/login', auth, authController.LoginAdmin);
 
-// //---------------------------------------------- News Routes -------------------------------------------------- //
-// router.get('/news/list', newsController.getNews);
-// router.get('/news/list/:id', newsController.getNewsBySection);
-// router.get('/news/detail/:id', newsController.getNewsDetail);
-// router.post('/admin/news/create', auth, newsController.createNews);
-// router.patch('/admin/news/update/:id', auth, newsController.updateNews);
-// router.post('/admin/news/delete/:id', auth, newsController.deleteNews);
-// router.get('/admin/news/list', auth, newsController.getNews);
-
-// //---------------------------------------------- Banners Routes ---------------------------------------------------- //
-// router.get('/banner/list', bannersController.getBanner);
-// router.post('/admin/banner/create', auth, bannersController.createBanner);
-// router.patch('/admin/banner/update/:id', auth, bannersController.updateBanner);
-// router.post('/admin/banner/delete/:id', auth, bannersController.deleteBanner);
-// router.get('/admin/banner/list', auth, bannersController.getBanner);
+//---------------------------------------------- Banners Routes ---------------------------------------------------- //
+router.get('/banner/list', auth, bannersController.getBanner);
+router.post('/banner/create', auth, bannersController.createBanner);
+router.patch('/banner/update/:id', auth, bannersController.updateBanner);
+router.delete('/banner/delete/:id', auth, bannersController.deleteBanner);
 
 
-// //---------------------------------------------- User Routes --------------------------------------------------- //
-// router.get('/admin/user/list', auth, usersController.getUser);
-// router.post('/admin/user/create', auth, usersController.createUser);
-// router.patch('/admin/user/update/:id', auth, usersController.updateUser);
-// router.post('/admin/user/delete/:id', auth, usersController.deleteUser);
+//---------------------------------------------- Category Routes --------------------------------------------------- //
+router.get('/category/list', auth, categoriesController.getCategories);
+router.post('/category/create', auth, categoriesController.create);
+router.patch('/category/update/:id', auth, categoriesController.update);
+router.delete('/category/delete/:id', auth, categoriesController.deleteCategory);
 
-// //---------------------------------------------- Auth Routes --------------------------------------------------- //
-// router.post('/admin/login', authController.Login);
+//---------------------------------------------- Subcategory Routes --------------------------------------------------- //
+router.get('/subcategory/list', auth, subcategoriesController.getSubcategories);
+router.post('/subcategory/create', auth, subcategoriesController.create);
+router.patch('/subcategory/update/:id', auth, subcategoriesController.update);
+router.delete('/subcategory/delete/:id', auth, subcategoriesController.deleteSubCategory);
 
-// module.exports = router;
+//---------------------------------------------- Users Routes --------------------------------------------------- //
+router.get('/user/list', auth, usersController.getUser);
+router.post('/user/create', auth, authController.registerUser);
+router.patch('/user/update/:id', auth, usersController.updateUser);
+router.delete('/user/delete/:id', auth, usersController.deleteUser);
+
+module.exports = router;

@@ -72,5 +72,5 @@ const updateAdmin = async (req, res) => {
 
 
 exports.getAdmin = getAdmin;
-exports.deleteUser = deleteAdmin;
+exports.deleteAdmin = deleteAdmin;
 exports.updateAdmin = updateAdmin;
