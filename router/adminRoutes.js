@@ -20,7 +20,7 @@ router.delete('/delete/:id', auth, adminsController.deleteAdmin);
 
 // -------------------------------------------- Auth Routes --------------------------------------------- //
 router.post('/auth/register', auth, authController.registerAdmin);
-router.post('/auth/login', auth, authController.LoginAdmin);
+router.post('/auth/login', authController.LoginAdmin);
 
 //---------------------------------------------- Banners Routes ---------------------------------------------------- //
 router.get('/banner/list', auth, bannersController.getBanner);

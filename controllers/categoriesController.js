@@ -1,3 +1,4 @@
+const fs = require('fs');
 const Category = require('../models/categories');
 const imageUpload = require('../helper/imageUpload');
 

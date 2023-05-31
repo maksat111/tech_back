@@ -12,19 +12,19 @@ const subcategoriesController = require('../controllers/subcategoriesController'
 const brandsController = require('../controllers/brandsController');
 
 // -------------------------------------------- Auth Routes --------------------------------------------- //
-router.post('/login', auth, authController.LoginUser);
-router.post('/register', auth, authController.registerUser);
+router.post('/login', authController.LoginUser);
+router.post('/register', authController.registerUser);
 
 // -------------------------------------------- Banner Routes --------------------------------------------- //
-router.get('/banner/list', auth, bannersController.getBanner);
+router.get('/banner/list', bannersController.getBanner);
 
 // -------------------------------------------- Categories Routes --------------------------------------------- //
-router.get('/category/list', auth, categoriesController.getCategories);
+router.get('/category/list', categoriesController.getCategories);
 
 // -------------------------------------------- Subcategories Routes --------------------------------------------- //
-router.get('/subcategory/list', auth, subcategoriesController.getSubcategories);
+router.get('/subcategory/list', subcategoriesController.getSubcategories);
 
 // -------------------------------------------- Brands Routes --------------------------------------------- //
-router.get('/brand/list', auth, brandsController.getBrands);
+router.get('/brand/list', brandsController.getBrands);
 
 module.exports = router;

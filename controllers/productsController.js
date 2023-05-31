@@ -1,3 +1,4 @@
+const fs = require('fs');
 const Product = require('../models/products');
 const imageUpload = require('../helper/imageUpload');
 

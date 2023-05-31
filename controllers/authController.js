@@ -92,9 +92,10 @@ const registerAdmin = async (req, res) => {
 
 const LoginAdmin = async (req, res) => {
     try {
-        const { password, email, phone_number } = req.body;
+        const { password, username } = req.body;
+        console.log(req.body)
 
-        const foundAdmin = await User.findOne({ $or: [{ email }, { phone_number }], is_active });
+        const foundAdmin = await Admin.findOne({ phone_number: username });
 
         if (foundAdmin && (await bcrypt.compare(password, foundAdmin.password))) {
             const token = jwt.sign(

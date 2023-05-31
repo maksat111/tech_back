@@ -1,3 +1,4 @@
+const fs = require('fs');
 const Brand = require('../models/brands');
 const imageUpload = require('../helper/imageUpload');
 
