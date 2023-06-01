@@ -48,9 +48,9 @@ router.patch('/user/update/:id', auth, usersController.updateUser);
 router.delete('/user/delete/:id', auth, usersController.deleteUser);
 
 //---------------------------------------------- Brands Routes --------------------------------------------------- //
-router.get('/user/list', auth, brandsController.getBrands);
-router.post('/user/create', auth, brandsController.create);
-router.patch('/user/update/:id', auth, brandsController.update);
-router.delete('/user/delete/:id', auth, brandsController.deleteBrand);
+router.get('/brand/list', auth, brandsController.getBrands);
+router.post('/brand/create', auth, brandsController.create);
+router.patch('/brand/update/:id', auth, brandsController.update);
+router.delete('/brand/delete/:id', auth, brandsController.deleteBrand);
 
 module.exports = router;

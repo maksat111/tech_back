@@ -64,6 +64,7 @@ const updateBanner = async (req, res) => {
 
         res.status(200).json({
             success: 1,
+            data: req.body
         })
     } catch (err) {
         res.status(500).json({

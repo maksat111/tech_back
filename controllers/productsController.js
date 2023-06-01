@@ -98,11 +98,7 @@ const deleteProduct = async (req, res) => {
             return res.status(200).json({ success: 0, msg: 'No Product in this id!' });
         }
 
-        if (req.files?.image) {
-            img = await imageUpload(req.files.image.name, req.files.image.data);
-            await fs.unlinkSync(found.image);
-            req.body.image = img;
-        }
+        found.image && await fs.unlinkSync(found.image);
 
         const deletedProduct = await Product.deleteOne({ _id: id });
 

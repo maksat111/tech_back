@@ -5,7 +5,7 @@ const imageUpload = require('../helper/imageUpload');
 const getSubcategories = async (req, res) => {
     try {
         const { category } = req.query;
-        const subcategories = await Subcategory.find(category ? { category } : {});
+        const subcategories = await Subcategory.find().populate('category');
         res.status(200).json({
             success: 1,
             data: subcategories
@@ -37,7 +37,7 @@ const create = async (req, res) => {
             req.body.image = img;
         }
 
-        const newSubCategory = await Category.create({
+        const newSubCategory = await Subcategory.create({
             name_tm,
             name_ru,
             name_en,
@@ -117,11 +117,7 @@ const deleteSubCategory = async (req, res) => {
             return res.status(200).json({ success: 0, msg: 'No Category in this id!' });
         }
 
-        if (req.files?.image) {
-            img = await imageUpload(req.files.image.name, req.files.image.data);
-            await fs.unlinkSync(found.image);
-            req.body.image = img;
-        }
+        found.image && await fs.unlinkSync(found.image);
 
         const deletedSubCategory = await Subcategory.deleteOne({ _id: id });
 

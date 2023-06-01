@@ -27,7 +27,7 @@ const create = async (req, res) => {
         if (found) {
             return res.status(200).json({
                 success: 0,
-                msg: "This category is already exists!"
+                msg: "This brand is already exists!"
             });
         }
 
@@ -75,7 +75,7 @@ const update = async (req, res) => {
             req.body.image = img;
         }
 
-        const updatedBrand = await Category.findByIdAndUpdate(id, {
+        const updatedBrand = await Brand.findByIdAndUpdate(id, {
             name,
             image: req.body.image,
             is_active
@@ -104,14 +104,10 @@ const deleteBrand = async (req, res) => {
         const found = await Brand.findOne({ _id: id });
 
         if (!found) {
-            return res.status(200).json({ success: 0, msg: 'No Category in this id!' });
+            return res.status(200).json({ success: 0, msg: 'No Brand in this id!' });
         }
 
-        if (req.files?.image) {
-            img = await imageUpload(req.files.image.name, req.files.image.data);
-            await fs.unlinkSync(found.image);
-            req.body.image = img;
-        }
+        found.image && await fs.unlinkSync(found.image);
 
         const deletedCategory = await Brand.deleteOne({ _id: id });
 

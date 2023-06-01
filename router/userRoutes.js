@@ -12,8 +12,8 @@ const subcategoriesController = require('../controllers/subcategoriesController'
 const brandsController = require('../controllers/brandsController');
 
 // -------------------------------------------- Auth Routes --------------------------------------------- //
-router.post('/login', authController.LoginUser);
-router.post('/register', authController.registerUser);
+router.post('/auth/login', authController.LoginUser);
+router.post('/auth/register', authController.registerUser);
 
 // -------------------------------------------- Banner Routes --------------------------------------------- //
 router.get('/banner/list', bannersController.getBanner);

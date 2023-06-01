@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const Admin = require('../models/admins');
 
 const getAdmin = async (req, res) => {
@@ -43,14 +44,17 @@ const deleteAdmin = async (req, res) => {
 const updateAdmin = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, surname, email, phone_number, is_active } = req.body;
+        const { name, surname, email, phone_number, is_active, password } = req.body;
 
-        let updatedUser = await User.findByIdAndUpdate(id, {
+        const encryptedPassword = await bcrypt.hash(password, 10);
+
+        let updatedUser = await Admin.findByIdAndUpdate(id, {
             name,
             surname,
             email,
             phone_number,
-            is_active
+            is_active,
+            password: encryptedPassword
         });
 
         updatedUser.name = name;
