@@ -115,7 +115,69 @@ const deleteProduct = async (req, res) => {
     }
 }
 
+const getHome = async (req, res) => {
+    try {
+        const products = await Product.aggregate([
+            { $sort: { date: -1 } },
+            {
+                $group: {
+                    _id: "$category",
+                    products: { $push: "$$ROOT" }
+                }
+            },
+            {
+                $project: {
+                    products: { $slice: ["$products", 4] }
+                }
+            },
+            {
+                $lookup: {
+                    from: "Subcategories",
+                    localField: "products.subcategory",
+                    foreignField: "_id",
+                    as: "shop"
+                }
+            },
+            {
+                $project: {
+                    products: {
+                        $map: {
+                            input: "$products",
+                            in: {
+                                $mergeObjects: [
+                                    "$$this",
+                                    {
+                                        shop: {
+                                            $arrayElemAt: [
+                                                {
+                                                    $filter: {
+                                                        input: "$subcategory",
+                                                        as: "s",
+                                                        cond: { $eq: ["$$s._id", "$$this.subcategory"] }
+                                                    }
+                                                },
+                                                0
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        ])
+        res.send(products)
+    } catch (err) {
+        res.status(500).json({
+            success: 0,
+            msg: err.message
+        })
+    }
+}
+
 exports.getProducts = getProducts;
 exports.create = create;
 exports.update = update;
 exports.deleteProduct = deleteProduct;
+exports.getHome = getHome;
