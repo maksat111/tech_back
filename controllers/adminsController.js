@@ -5,6 +5,8 @@ const getAdmin = async (req, res) => {
     try {
         const Admins = await Admin.find();
 
+        Admins.forEach(item => item.password = undefined);
+
         res.status(200).json({
             success: 1,
             data: Admins
@@ -44,28 +46,23 @@ const deleteAdmin = async (req, res) => {
 const updateAdmin = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, surname, email, phone_number, is_active, password } = req.body;
+        const { new_password, password } = req.body;
 
-        const encryptedPassword = await bcrypt.hash(password, 10);
+        const foundUser = await Admin.findOne({ _id: id });
 
-        let updatedUser = await Admin.findByIdAndUpdate(id, {
-            name,
-            surname,
-            email,
-            phone_number,
-            is_active,
-            password: encryptedPassword
-        });
+        if (new_password && (await bcrypt.compare(password, foundUser.password))) {
+            req.body.password = await bcrypt.hash(new_password, 10);
+        } else {
+            req.body.password = undefined;
+        }
 
-        updatedUser.name = name;
-        updatedUser.surname = surname;
-        updatedUser.email = email;
-        updatedUser.phone_number = phone_number;
-        updatedUser.is_active = is_active;
+        let updatedUser = await Admin.findByIdAndUpdate(id, req.body);
+
+        req.body.new_password = undefined;
 
         res.status(200).json({
             success: 1,
-            data: updatedUser
+            data: req.body
         })
     } catch (err) {
         res.status(500).json({

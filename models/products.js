@@ -33,15 +33,15 @@ const ProductsSchema = new mongoose.Schema({
         type: Array,
         default: ''
     },
-    desctiption_tm: {
+    description_tm: {
         type: String,
         default: ''
     },
-    desctiption_ru: {
+    description_ru: {
         type: String,
         default: ''
     },
-    desctiption_en: {
+    description_en: {
         type: String,
         default: ''
     },

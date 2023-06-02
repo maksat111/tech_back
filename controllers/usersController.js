@@ -1,8 +1,11 @@
 const User = require('../models/users');
+const bcrypt = require('bcryptjs');
 
 const getUser = async (req, res) => {
     try {
         const Users = await User.find();
+
+        Users.forEach(item => item.password = undefined)
 
         res.status(200).json({
             success: 1,
@@ -43,21 +46,23 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, surname, username } = req.body;
+        const { new_password, password } = req.body;
 
-        let updatedUser = await User.findByIdAndUpdate(id, {
-            name,
-            surname,
-            username,
-        });
+        const foundUser = await User.findOne({ _id: id });
 
-        updatedUser.name = name;
-        updatedUser.surname = surname;
-        updatedUser.username = username;
+        if (new_password && (await bcrypt.compare(password, foundUser.password))) {
+            req.body.password = await bcrypt.hash(new_password, 10);
+        } else {
+            req.body.password = undefined;
+        }
+
+        let updatedUser = await User.findByIdAndUpdate(id, req.body);
+
+        req.body.new_password = undefined;
 
         res.status(200).json({
             success: 1,
-            data: updatedUser
+            data: req.body
         })
     } catch (err) {
         res.status(500).json({

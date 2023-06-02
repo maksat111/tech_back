@@ -4,7 +4,7 @@ const imageUpload = require('../helper/imageUpload');
 
 const getProducts = async (req, res) => {
     try {
-        const categories = await Product.find().populate('brands category subcategory');
+        const categories = await Product.find().populate('subcategory brand category');
 
         categories.forEach(item => {
             item.subcategory.category = undefined;
@@ -36,12 +36,12 @@ const create = async (req, res) => {
             });
         }
 
-        if (req.files?.image) {
-            img = await imageUpload(req.files.image.name, req.files.image.data);
-            req.body.image = img;
+        if (req.files?.main_image) {
+            img = await imageUpload(req.files.main_image.name, req.files.main_image.data);
+            req.body.main_image = img;
         }
 
-        const newCategory = await Category.create(req.body);
+        const newCategory = await Product.create(req.body);
 
         res.status(201).json({
             success: 1,
@@ -69,16 +69,17 @@ const update = async (req, res) => {
             });
         }
 
-        if (req.files?.image) {
-            img = await imageUpload(req.files.image.name, req.files.image.data);
-            await fs.unlinkSync(found.image)
-            req.body.image = img;
+        if (req.files?.main_image) {
+            img = await imageUpload(req.files.main_image.name, req.files.main_image.data);
+            await fs.unlinkSync(found.main_image)
+            req.body.main_image = img;
         }
 
         const updatedCategory = await Product.findByIdAndUpdate(id, req.body);
 
         res.status(200).json({
             success: 1,
+            data: req.body
         })
     } catch (err) {
         res.status(500).json({
@@ -98,7 +99,7 @@ const deleteProduct = async (req, res) => {
             return res.status(200).json({ success: 0, msg: 'No Product in this id!' });
         }
 
-        found.image && await fs.unlinkSync(found.image);
+        found.main_image && await fs.unlinkSync(found.main_image);
 
         const deletedProduct = await Product.deleteOne({ _id: id });
 
