@@ -6,6 +6,8 @@ const getProducts = async (req, res) => {
   try {
     const { search } = req.query;
 
+    let config = {};
+
     if (search) {
       config = {
         $or: [
@@ -16,11 +18,51 @@ const getProducts = async (req, res) => {
       };
     }
 
-    const categories = await Product.find().populate("brand category");
+    const categories = await Product.find(config).populate("brand category");
 
     res.status(200).json({
       success: 1,
       data: categories,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: 0,
+      msg: err.message,
+    });
+  }
+};
+
+const getProductsByCatId = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const categories = await Product.find({ category: id }).populate(
+      "brand category"
+    );
+
+    res.status(200).json({
+      success: 1,
+      data: categories,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: 0,
+      msg: err.message,
+    });
+  }
+};
+
+const getProductDetails = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const categories = await Product.find({ _id: id }).populate(
+      "brand category"
+    );
+
+    res.status(200).json({
+      success: 1,
+      data: categories[0],
     });
   } catch (err) {
     res.status(500).json({
@@ -152,3 +194,5 @@ exports.create = create;
 exports.update = update;
 exports.deleteProduct = deleteProduct;
 exports.getHome = getHome;
+exports.getProductsByCatId = getProductsByCatId;
+exports.getProductDetails = getProductDetails;

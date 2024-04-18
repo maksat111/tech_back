@@ -21,6 +21,7 @@ router.get("/banner/list", bannersController.getBanner);
 
 // -------------------------------------------- Categories Routes --------------------------------------------- //
 router.get("/category/list", categoriesController.getCategories);
+router.get("/category/:id", productsController.getProductsByCatId);
 
 // -------------------------------------------- Subcategories Routes --------------------------------------------- //
 router.get("/subcategory/list", subcategoriesController.getSubcategories);
@@ -28,7 +29,8 @@ router.get("/subcategory/list", subcategoriesController.getSubcategories);
 // -------------------------------------------- Brands Routes --------------------------------------------- //
 router.get("/brand/list", brandsController.getBrands);
 
-// -------------------------------------------- Brands Routes --------------------------------------------- //
+// -------------------------------------------- product Routes --------------------------------------------- //
 router.get("/product/list", productsController.getProducts);
+router.get("/product/:id", productsController.getProductDetails);
 
 module.exports = router;
